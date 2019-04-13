@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { IUploadResponse } from '../model/IUploadResponse.model';
 import { ExcelFileService } from '../service/excel-file.service';
+import {Observable} from 'rxjs';
 @Component({
   selector: 'app-download',
   templateUrl: './download.component.html',
@@ -15,7 +16,7 @@ export class DownloadComponent implements OnInit {
   }
 
   downloadByOrder(myform) {
-    if (this.orderValid(myform.value['column-order'])==false) {
+    if (this.orderValid(myform.value['column-order']) == false) {
 
     } else {
       this.excelFileService.downloadMergedFile(myform.value['column-order'], this.downloadEvent[0].id,
@@ -40,9 +41,9 @@ export class DownloadComponent implements OnInit {
               link.remove();
             }, 100);
           },
-          err => {
-            console.log(err);
-
+          response => {
+            console.log(response);
+            
           }
         );
     }
