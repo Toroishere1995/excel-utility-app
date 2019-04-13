@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { IUploadResponse } from '../model/IUploadResponse.model';
 import { ExcelFileService } from '../service/excel-file.service';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
+import { text } from '@angular/core/src/render3/instructions';
 @Component({
   selector: 'app-download',
   templateUrl: './download.component.html',
@@ -12,14 +13,23 @@ export class DownloadComponent implements OnInit {
   @Input() downloadEvent: IUploadResponse[];
   constructor(private excelFileService: ExcelFileService) { }
 
+  message: string;
+  showMessage: boolean;
+
+  enableDownload: boolean = false;
+
   ngOnInit() {
   }
 
   downloadByOrder(myform) {
-    if (this.orderValid(myform.value['column-order']) == false) {
+    const coloumnHeadingOrder = myform.value['column-order'];
 
+    if (this.orderValid(coloumnHeadingOrder) == false) {
+      this.message = "Please check order";
+      this.showMessage = true;
     } else {
-      this.excelFileService.downloadMergedFile(myform.value['column-order'], this.downloadEvent[0].id,
+      this.showMessage = false;
+      this.excelFileService.downloadMergedFile(coloumnHeadingOrder, this.downloadEvent[0].id,
         this.downloadEvent[1].id).subscribe(
           data => {
             var newBlob = new Blob([data], { type: 'application/vnd.ms-excel' });
@@ -43,7 +53,8 @@ export class DownloadComponent implements OnInit {
           },
           response => {
             console.log(response);
-            
+            this.message = response.message;
+            this.showMessage = true;
           }
         );
     }
@@ -51,10 +62,7 @@ export class DownloadComponent implements OnInit {
 
   orderValid(columnHeadingOrder: string) {
     //console.log(this.downloadEvent[0].columnHeadings);
-    var x: IUploadResponse[] = new Array(2);
-    x = this.downloadEvent.slice();
-
-    var columnFile1 = Array.from(x[0].coloumnHeadings);
+    var columnFile1 = Array.from(this.downloadEvent[0].coloumnHeadings);
     var columnFile2 = Array.from(this.downloadEvent[1].coloumnHeadings);
 
     //console.log(columnFile1);
@@ -66,5 +74,15 @@ export class DownloadComponent implements OnInit {
     //console.log(columns.sort().join(','));
     //console.log(JSON.stringify(children.sort().join('')) === JSON.stringify(columns.sort().join('')));
     return JSON.stringify(children.sort().join('')) === JSON.stringify(columns.sort().join(''));
+  }
+
+  textValue: string = '';
+  textAreaEmpty() {
+    if (this.textValue.length > 0) {
+      this.enableDownload = true;
+      console.log(this.textValue);
+    } else {
+      this.enableDownload = false;
+    }
   }
 }

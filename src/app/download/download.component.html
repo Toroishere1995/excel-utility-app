@@ -1,8 +1,9 @@
 <div class="container">
   <div>
-    <table class="table table-striped">
-      <tbody>
-        <div *ngFor="let excelSheet of downloadEvent">
+    <table class="table" >
+      <div *ngFor="let excelSheet of downloadEvent">
+        <tbody>
+
           <tr>
             <th scope="row">File Name</th>
             <td>{{excelSheet.filename}}</td>
@@ -11,20 +12,25 @@
             <th scope="row">Available Columns</th>
             <td>{{excelSheet.coloumnHeadings}}</td>
           </tr>
-        </div>
-      </tbody>
+
+        </tbody>
+      </div>
     </table>
   </div>
   <div class="order-form">
+    <div *ngIf="showMessage">
+      <app-message [message]="message"></app-message>
+    </div>
     <form #myform="ngForm" (ngSubmit)="downloadByOrder(myform)" class="form form-order">
 
       <div class="form-field">
         <label class="set-order" for="order">Set Order</label>
-        <textarea rows="3" name="column-order" id="order" class="form-textarea" placeholder="Col1,Col2,Col3,..." ngModel required></textarea>
+        <textarea rows="3" name="column-order" id="order" class="form-textarea" placeholder="Col1,Col2,Col3,Col4....."
+          [(ngModel)]="textValue" (ngModelChange)="textAreaEmpty()" ngModel required></textarea>
 
       </div>
       <div class="form-field">
-        <input type="submit" value="Download">
+        <button class="btn btn-primary" value="Download" [disabled]="!enableDownload">Download</button>
       </div>
     </form>
   </div>
