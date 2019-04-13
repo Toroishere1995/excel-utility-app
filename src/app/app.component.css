@@ -1,0 +1,15 @@
+
+.container {
+    border-left: 6px solid #2196F3!important;
+    background-color: #deffff!important;
+    margin-top: 20px;
+    padding: 10px;
+  }
+
+  .upload{
+      margin: 10px;
+  }
+
+  .download{
+      margin: 10px;
+  }

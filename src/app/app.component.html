@@ -1,3 +1,9 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<app-upload (responseEvent)='childEventResponse($event)'></app-upload>
-<app-download [downloadEvent]='uploadedResponse'></app-download>
+<div class="container">
+  <div class="upload">
+    <app-upload (responseEvent)='childEventResponse($event)'></app-upload>
+  </div>
+  <div class="download" *ngIf="showDownloadComponent">
+    <app-download [downloadEvent]='uploadedResponse'></app-download>
+  </div>
+</div>
