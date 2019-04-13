@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpParams,HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -16,8 +16,21 @@ export class ApiService {
     return throwError(error.error);
   }
 
+  private parseErrorBlob(err: HttpErrorResponse): Observable<any> {
+    const reader: FileReader = new FileReader();
+
+    const obs = Observable.create((observer: any) => {
+      reader.onloadend = (e) => {
+        observer.error(JSON.parse(reader.result));
+        observer.complete();
+      }
+    });
+    reader.readAsText(err.error);
+    return obs;
+  }
+  
   post(path: string, body): Observable<any> {
-   // console.log(body)
+    // console.log(body)
     return this.http.post(
       `${environment.api_url}${path}`,
       body
@@ -32,10 +45,10 @@ export class ApiService {
 
   postForDownload(path: string, body): Observable<any> {
     // console.log(body)
-     return this.http.post(
-       `${environment.api_url}${path}`,
-       body,{ responseType : 'blob' }
-     ).pipe(catchError(this.formatErrors));
-   }
- 
+    return this.http.post(
+      `${environment.api_url}${path}`,
+      body, { responseType: 'blob' as 'json'}
+    ).pipe(catchError(this.parseErrorBlob));
+  }
+
 }
