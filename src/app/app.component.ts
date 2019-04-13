@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import {IUploadResponse} from './model/IUploadResponse.model';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,5 +10,10 @@ export class AppComponent implements OnInit {
   constructor() { }
   ngOnInit() {
 
+  }
+  uploadedResponse: IUploadResponse[] = [];
+  childEventResponse(event){
+    this.uploadedResponse = event;
+    console.log(this.uploadedResponse);
   }
 }
