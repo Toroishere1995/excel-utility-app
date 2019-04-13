@@ -1,13 +1,18 @@
-<div>
+<div class="upload-container">
   <h4>
     {{title}}!
   </h4>
-  <div *ngIf="showMessage">
+  <div *ngIf="showMessage" class="message">
     <app-message [message]="message"></app-message>
   </div>
-  <ng-container>
-    <input type="file" id="file" multiple max="2" (change)="getFileDetails($event)">
+  <div class="upload-form">
+    <ng-container>
+      
+      <input type="file" id="file" multiple max="2" (change)="getFileDetails($event)">
 
-    <button (click)="uploadFiles()" [disabled]="disableUpload">Upload</button>
-  </ng-container>
+      <button type="button" class="btn btn-primary" (click)="uploadFiles()" [disabled]="disableUpload">Upload</button>
+    </ng-container>
+  </div>
 </div>
+
+  
