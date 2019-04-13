@@ -9,7 +9,7 @@ export class ExcelFileService {
 
   constructor(private apiService:ApiService) { }
 
-  uploadFiles(files: string []): Observable<{data:any}> {
+  uploadFiles(files: string []): Observable<any> {
    // console.log(files);
     const formData = new FormData();
     
