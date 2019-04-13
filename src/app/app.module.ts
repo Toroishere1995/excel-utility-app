@@ -10,12 +10,14 @@ import { ApiService } from './service/api.service';
 import { ExcelFileService } from './service/excel-file.service';
 import { DownloadComponent } from './download/download.component';
 import { FormsModule } from '@angular/forms';
+import { MessageComponent } from './message/message.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UploadComponent,
-    DownloadComponent
+    DownloadComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
