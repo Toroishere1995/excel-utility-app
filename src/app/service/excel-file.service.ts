@@ -20,4 +20,10 @@ export class ExcelFileService {
     return this.apiService.post('/uploadFiles',formData);
   }
  
+  downloadMergedFile(columnHeadingString:string,file1id,file2id): Observable<any>{
+    //var body = {'zzzz'};
+    const body=columnHeadingString.split(",");
+    const urlParam='?file1Id='+file1id+'&file2Id='+file2id;
+    return this.apiService.postForDownload('/downloadFile'+urlParam,body);
+  }
 }

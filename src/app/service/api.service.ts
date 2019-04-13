@@ -29,4 +29,13 @@ export class ApiService {
     return this.http.get(`${environment.api_url}${path}`, { params })
       .pipe(catchError(this.formatErrors));
   }
+
+  postForDownload(path: string, body): Observable<any> {
+    // console.log(body)
+     return this.http.post(
+       `${environment.api_url}${path}`,
+       body,{ responseType : 'blob' }
+     ).pipe(catchError(this.formatErrors));
+   }
+ 
 }
