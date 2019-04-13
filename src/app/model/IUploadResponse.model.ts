@@ -1,7 +1,7 @@
 export interface IUploadResponse {
     id:number;
 
-    columnHeadings:string [];
+    coloumnHeadings:string [];
 
     filename:string;
 }
