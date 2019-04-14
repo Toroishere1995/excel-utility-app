@@ -32,6 +32,7 @@ export class UploadComponent implements OnInit {
 
   getFileDetails(event) {
     let numberOfFiles = event.target.files.length;
+    this.showMessage = false;
     if (numberOfFiles != 2) {
       this.showMessage = true;
       this.message = 'Two files for upload.';
@@ -68,7 +69,7 @@ export class UploadComponent implements OnInit {
         this.uploadedResponse = res.result;
         this.status = res.status;
         this.code = res.code;
-        this.message = res.message;
+       // this.message = res.message;
         if (this.code === '201') {
           this.responseEvent.emit(this.uploadedResponse);
           console.log(this.uploadedResponse);
