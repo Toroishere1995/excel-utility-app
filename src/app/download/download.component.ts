@@ -78,6 +78,7 @@ export class DownloadComponent implements OnInit {
 
   textValue: string = '';
   textAreaEmpty() {
+    this.showMessage=false;
     if (this.textValue.length > 0) {
       this.enableDownload = true;
       console.log(this.textValue);
